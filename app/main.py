@@ -1,6 +1,6 @@
 import logging
 import os
-# from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException, Header, Request
 from .config import SECRET_KEY
 from .models import WebsiteDetails
@@ -8,6 +8,14 @@ from .scraper import extract_details_with_langchain
 
 # FastAPI app
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Adjust origins as needed for security
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
+)
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)

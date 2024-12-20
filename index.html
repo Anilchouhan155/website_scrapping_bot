@@ -45,7 +45,7 @@
       const auth = document.getElementById('auth').value;
 
       try {
-        const res = await fetch('http://127.0.0.1:8000/scrape', { // Change this to your FastAPI server URL
+        const res = await fetch('https://website-scrapping-bot.onrender.com/scrape', { // Change this to your FastAPI server URL
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
