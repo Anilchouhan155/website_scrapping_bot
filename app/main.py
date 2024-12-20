@@ -2,9 +2,9 @@ import logging
 import os
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException, Header, Request
-from config import SECRET_KEY
-from models import WebsiteDetails
-from scraper import extract_details_with_langchain
+from .config import SECRET_KEY
+from .models import WebsiteDetails
+from .scraper import extract_details_with_langchain
 
 # FastAPI app
 app = FastAPI()

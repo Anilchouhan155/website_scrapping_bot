@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-from config import OPENAI_API_KEY
-from models import WebsiteDetails
+from .config import OPENAI_API_KEY
+from .models import WebsiteDetails
 from langchain_openai.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.output_parsers import StructuredOutputParser, ResponseSchema
