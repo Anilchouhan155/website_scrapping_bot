@@ -1,0 +1,6 @@
+uvicorn
+fastapi
+requests
+bs4
+langchain_openai
+langchain
