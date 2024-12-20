@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Scraper</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+  <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+    <h1 class="text-2xl font-bold text-gray-800 mb-4">Website Scraper</h1>
+    
+    <form id="scrapeForm" class="mb-4">
+      <div class="mb-4">
+        <label for="url" class="block text-sm font-medium text-gray-700">Website URL</label>
+        <input type="url" id="url" name="url" required
+          class="mt-1 block w-full p-2 border border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500">
+      </div>
+      <div class="mb-4">
+        <label for="auth" class="block text-sm font-medium text-gray-700">Authorization Token</label>
+        <input type="text" id="auth" name="auth" required
+          class="mt-1 block w-full p-2 border border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500">
+      </div>
+      <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">
+        Scrape Website
+      </button>
+    </form>
+    
+    <div id="response" class="hidden">
+      <h2 class="text-xl font-bold text-gray-800 mb-2">Response</h2>
+      <pre id="responseContent" class="bg-gray-100 p-4 rounded border border-gray-300 text-sm"></pre>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('scrapeForm');
+    const responseContainer = document.getElementById('response');
+    const responseContent = document.getElementById('responseContent');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const url = document.getElementById('url').value;
+      const auth = document.getElementById('auth').value;
+
+      try {
+        const res = await fetch('http://127.0.0.1:8000/scrape', { // Change this to your FastAPI server URL
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${auth}`
+          },
+          body: JSON.stringify({ url })
+        });
+
+        if (!res.ok) {
+          throw new Error(`Error: ${res.statusText}`);
+        }
+
+        const data = await res.json();
+        responseContent.textContent = JSON.stringify(data, null, 2); // Pretty-print the JSON response
+        responseContainer.classList.remove('hidden');
+      } catch (error) {
+        responseContent.textContent = `Error: ${error.message}`;
+        responseContainer.classList.remove('hidden');
+      }
+    });
+  </script>
+</body>
+</html>
